@@ -1,0 +1,17 @@
+{
+  "name": "ultipayGateway",
+  "description": "Ultipay gateway",
+  "repository": {},
+  "license": "MIT",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "express-gateway": "^1.16.9",
+    "fastify": "^2.10.0",
+    "nodemon": "^1.19.4"
+  }
+}

@@ -1,0 +1,95 @@
+http:
+  port: 8000
+admin:
+  port: 9000
+  host: localhost
+apiEndpoints:
+  accountService:
+    host: localhost
+    paths: '/admin'
+  customers:
+    host: "localhost"
+    paths: "/api/customers/*"
+  orders:
+    host: "localhost"
+    paths: "/api/orders/*"
+serviceEndpoints:
+  accountService:
+    url: 'http://localhost:8100'
+  customers:
+    url: 'http://localhost:3000'
+  orders:
+    url: 'http://localhost:3000'
+  httpbin:
+    url: 'https://httpbin.org'
+policies:
+  - jwt
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+pipelines:
+  default:
+    apiEndpoints:
+      - api
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+      - key-auth:
+      # - oauth2:
+      - proxy:
+          - action:
+              serviceEndpoint: httpbin 
+              changeOrigin: true
+  accountService:
+    apiEndpoints:
+      - accountService
+    policies:
+      - rate-limit:
+        - action:
+            max: 10                      
+            windowMs: 120000
+      - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: accountService
+              changeOrigin: true
+  customers:
+    apiEndpoints:
+      - customers
+    policies:
+      - rate-limit:
+        - action:
+            max: 10                      
+            windowMs: 120000
+      - key-auth:
+        - action:
+            apiKeyHeader: "authorization"
+            apiKeyHeaderScheme: "apiKey"
+      # - jwt:
+      #   - action:
+      #       secretOrPublicKeyFile: ./key/pubKey.pem
+      #       checkCredentialExistence: false
+      - proxy:
+          - action:
+              serviceEndpoint: customers
+              changeOrigin: true
+  orders:
+    apiEndpoints:
+      - orders
+    policies:
+      - rate-limit:
+        - action:
+            max: 10                      
+            windowMs: 120000 
+      # - jwt:
+      #   - action:
+      #       secretOrPublicKeyFile: ./key/pubKey.pem
+      #       checkCredentialExistence: false
+      - proxy:
+          - action:
+              serviceEndpoint: orders
+              changeOrigin: true
