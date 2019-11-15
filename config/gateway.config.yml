@@ -1,25 +1,40 @@
 http:
   port: 8000
 admin:
-  port: 9000
+  port: 8001
   host: localhost
 apiEndpoints:
-  accountService:
+  authentication:
     host: localhost
-    paths: '/admin'
-  customers:
+    paths: "/authentications/*"
+  outlet:
+    host: localhost
+    paths: "/outlet/*"
+  registration:
+    host: localhost
+    paths: "/account/registration/*"
+  account:
+    host: localhost
+    paths: "/account/*"
+  backend:
     host: "localhost"
-    paths: "/api/customers/*"
-  orders:
+    paths: "/backend/*"
+  transaction:
     host: "localhost"
-    paths: "/api/orders/*"
+    paths: "/transaction/*"
 serviceEndpoints:
-  accountService:
-    url: 'http://localhost:8100'
-  customers:
-    url: 'http://localhost:3000'
-  orders:
-    url: 'http://localhost:3000'
+  authentication:
+    url: 'http://localhost:8202'
+  outlet:
+    url: 'http://localhost:8205'
+  registration:
+    url: 'http://localhost:8206'
+  account:
+    url: 'http://localhost:8206'
+  backend:
+    url: 'http://localhost:8203'
+  transaction:
+    url: 'http://localhost:8201'
   httpbin:
     url: 'https://httpbin.org'
 policies:
@@ -44,9 +59,10 @@ pipelines:
           - action:
               serviceEndpoint: httpbin 
               changeOrigin: true
-  accountService:
+
+  authentication:
     apiEndpoints:
-      - accountService
+      - authentication
     policies:
       - rate-limit:
         - action:
@@ -55,11 +71,52 @@ pipelines:
       - key-auth:
       - proxy:
           - action:
-              serviceEndpoint: accountService
+              serviceEndpoint: authentication
               changeOrigin: true
-  customers:
+  
+  registration:
     apiEndpoints:
-      - customers
+      - registration
+    policies:
+      - rate-limit:
+        - action:
+            max: 10                      
+            windowMs: 120000
+      - proxy:
+          - action:
+              serviceEndpoint: registration
+              changeOrigin: true
+  
+  outlet:
+    apiEndpoints:
+      - outlet
+    policies:
+      - rate-limit:
+        - action:
+            max: 10                      
+            windowMs: 120000
+      - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: outlet
+              changeOrigin: true
+
+  account:
+    apiEndpoints:
+      - account
+    policies:
+      - rate-limit:
+        - action:
+            max: 10                      
+            windowMs: 120000
+      - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: account
+              changeOrigin: true
+  backend:
+    apiEndpoints:
+      - backend
     policies:
       - rate-limit:
         - action:
@@ -75,21 +132,19 @@ pipelines:
       #       checkCredentialExistence: false
       - proxy:
           - action:
-              serviceEndpoint: customers
+              serviceEndpoint: backend
               changeOrigin: true
-  orders:
+              
+  transaction:
     apiEndpoints:
-      - orders
+      - transaction
     policies:
       - rate-limit:
         - action:
             max: 10                      
             windowMs: 120000 
-      # - jwt:
-      #   - action:
-      #       secretOrPublicKeyFile: ./key/pubKey.pem
-      #       checkCredentialExistence: false
+      - key-auth:
       - proxy:
           - action:
-              serviceEndpoint: orders
+              serviceEndpoint: transaction
               changeOrigin: true
