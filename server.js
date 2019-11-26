@@ -7,7 +7,13 @@ gateway()
   .load(path.join(__dirname, 'config'))
   .run();
 
-  fastify.get('/api/customers/', async (request, reply) => {
+  fastify.get('/test/', async (request, reply) => {
+    console.log('test pak eko');
+    return { hello: 'pak eko' }
+  })
+
+  fastify.get('/test/log', async (request, reply) => {
+    console.log('masuk pak eko');
     return { hello: 'world' }
   })
 
