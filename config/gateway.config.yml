@@ -2,17 +2,17 @@ http:
   port: 8000
 admin:
   port: 8001
-  host: localhost
+  host: 'localhost'
 apiEndpoints:
-  authentication:
+  internalAccess:
+    host: 'localhost'
+    paths: "/internalAccess/*"
+  authentications:
     host: localhost
     paths: "/authentications/*"
   outlet:
     host: localhost
     paths: "/outlet/*"
-  registration:
-    host: localhost
-    paths: "/account/registration/*"
   account:
     host: localhost
     paths: "/account/*"
@@ -23,12 +23,12 @@ apiEndpoints:
     host: "localhost"
     paths: "/transaction/*"
 serviceEndpoints:
-  authentication:
+  internalAccess:
+    url: 'http://localhost:8002'
+  authentications:
     url: 'http://localhost:8202'
   outlet:
     url: 'http://localhost:8205'
-  registration:
-    url: 'http://localhost:8206'
   account:
     url: 'http://localhost:8206'
   backend:
@@ -48,6 +48,7 @@ policies:
   - proxy
   - rate-limit
 pipelines:
+
   default:
     apiEndpoints:
       - api
@@ -60,9 +61,22 @@ pipelines:
               serviceEndpoint: httpbin 
               changeOrigin: true
 
-  authentication:
+  internalAccess:
     apiEndpoints:
-      - authentication
+      - internalAccess
+    policies:
+      - rate-limit:
+        - action:
+            max: 10                      
+            windowMs: 120000
+      - proxy:
+          - action:
+              serviceEndpoint: internalAccess
+              changeOrigin: true
+
+  authentications:
+    apiEndpoints:
+      - authentications
     policies:
       - rate-limit:
         - action:
@@ -71,22 +85,9 @@ pipelines:
       - key-auth:
       - proxy:
           - action:
-              serviceEndpoint: authentication
+              serviceEndpoint: authentications
               changeOrigin: true
-  
-  registration:
-    apiEndpoints:
-      - registration
-    policies:
-      - rate-limit:
-        - action:
-            max: 10                      
-            windowMs: 120000
-      - proxy:
-          - action:
-              serviceEndpoint: registration
-              changeOrigin: true
-  
+
   outlet:
     apiEndpoints:
       - outlet
