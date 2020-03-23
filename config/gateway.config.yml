@@ -22,6 +22,9 @@ apiEndpoints:
   transaction:
     host: "localhost"
     paths: "/transaction/*"
+  paymentGateway:
+    host: "localhost"
+    paths: "/paymentGateway/*"
 serviceEndpoints:
   internalAccess:
     url: 'http://localhost:8002'
@@ -35,6 +38,8 @@ serviceEndpoints:
     url: 'http://localhost:8203'
   transaction:
     url: 'http://localhost:8201'
+  paymentGateway:
+    url: 'http://localhost:8200'
   httpbin:
     url: 'https://httpbin.org'
 policies:
@@ -59,6 +64,19 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: httpbin 
+              changeOrigin: true
+
+  paymentGateway:
+    apiEndpoints:
+      - paymentGateway
+    policies:
+      - rate-limit:
+        - action:
+            max: 10                      
+            windowMs: 120000
+      - proxy:
+          - action:
+              serviceEndpoint: paymentGateway
               changeOrigin: true
 
   internalAccess:

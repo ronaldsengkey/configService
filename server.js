@@ -3,23 +3,46 @@ const path = require('path');
 const gateway = require('express-gateway');
 const fastify = require('fastify')({ logger: true });
 const axios = require('axios');
+require('dotenv').config();
 
 gateway()
   .load(path.join(__dirname, 'config'))
   .run();
 
-  fastify.post('/internalAccess/:params', async (request, reply) => {
-    console.log(request.body)
-    let p = request.params.params ;
+async function actionPost(data){
+  try{
+    axios({
+      method: 'post',
+        url: data.url,
+        headers: {
+          "Content-Type": "application/json"
+        },
+        data: data.content
+    })
+  }catch(err){
+    console.log('error action post');
+  }
+}
+
+  fastify.post('/internalAccess/:params/:accountName', async (request, reply) => {
+    console.log();
+    let data = {};
+    let p = request.params.params;
+    let acn = request.query.accountName;
+    data.content = request.body;
+    console.log(data);
+    // switch(p){
+    //   case "register":
+    //     data.url = {url:process.env.ACCOUNT_SERVICE_HOST+acn,}
+    //     let a = await actionPost()
+    //     break;
+    // }
     return p;
   });
 
 
   fastify.post('/login/authentications/:params', async (request, reply) => {
-    // console.log(request.body.params.email, request.body.params.password,'>>>', request.params.params);
-    // console.log('>>>', 'http://192.168.0.9:8202/authentications/login/'+request.params.params);
     let url = 'http://localhost:8202/authentications/login/'+request.params.params;
-    // console.log(url);
       axios({
         method: 'post',
           url: url,
