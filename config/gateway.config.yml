@@ -1,12 +1,25 @@
-http:
-  port: 8000
+https:
+  port: 8443
+  tls:
+    {
+      default:
+        {
+          cert: "ssl/server.crt",
+          key: "ssl/server.key",
+          ca: ["ssl/rootCA.pem"],
+        },
+    }
+  options: { requestCert: false, rejectUnauthorized: false }
 admin:
-  port: 8001
-  host: 'localhost'
+  port: 8444
+  host: "localhost"
 apiEndpoints:
-  internalAccess:
-    host: 'localhost'
-    paths: "/internalAccess/*"
+  ewallet:
+    host: "localhost"
+    paths: "/ewallet/*"
+  config:
+    host: "localhost"
+    paths: "/config/*"
   authentications:
     host: localhost
     paths: "/authentications/*"
@@ -26,22 +39,24 @@ apiEndpoints:
     host: "localhost"
     paths: "/paymentGateway/*"
 serviceEndpoints:
-  internalAccess:
-    url: 'http://localhost:8002'
+  ewallet:
+    url: "http://localhost:8089"
+  config:
+    url: "http://localhost:8002"
   authentications:
-    url: 'http://localhost:8202'
+    url: "http://localhost:8202"
   outlet:
-    url: 'http://localhost:8205'
+    url: "http://localhost:8205"
   account:
-    url: 'http://localhost:8206'
+    url: "http://localhost:8206"
   backend:
-    url: 'http://localhost:8203'
+    url: "http://localhost:8203"
   transaction:
-    url: 'http://localhost:8201'
+    url: "http://localhost:8201"
   paymentGateway:
-    url: 'http://localhost:8200'
+    url: "http://localhost:8200"
   httpbin:
-    url: 'https://httpbin.org'
+    url: "https://httpbin.org"
 policies:
   - jwt
   - basic-auth
@@ -53,17 +68,28 @@ policies:
   - proxy
   - rate-limit
 pipelines:
-
   default:
     apiEndpoints:
       - api
     policies:
-    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+      # Uncomment `key-auth:` when instructed to in the Getting Started guide.
       - key-auth:
       # - oauth2:
       - proxy:
           - action:
-              serviceEndpoint: httpbin 
+              serviceEndpoint: httpbin
+              changeOrigin: true
+  ewallet:
+    apiEndpoints:
+      - ewallet
+    policies:
+      - rate-limit:
+          - action:
+              max: 5
+              windowMs: 120000
+      - proxy:
+          - action:
+              serviceEndpoint: ewallet
               changeOrigin: true
 
   paymentGateway:
@@ -71,25 +97,25 @@ pipelines:
       - paymentGateway
     policies:
       - rate-limit:
-        - action:
-            max: 10                      
-            windowMs: 120000
+          - action:
+              max: 5
+              windowMs: 120000
       - proxy:
           - action:
               serviceEndpoint: paymentGateway
               changeOrigin: true
 
-  internalAccess:
+  config:
     apiEndpoints:
-      - internalAccess
+      - config
     policies:
       - rate-limit:
-        - action:
-            max: 10                      
-            windowMs: 120000
+          - action:
+              max: 5
+              windowMs: 120000
       - proxy:
           - action:
-              serviceEndpoint: internalAccess
+              serviceEndpoint: config
               changeOrigin: true
 
   authentications:
@@ -97,9 +123,9 @@ pipelines:
       - authentications
     policies:
       - rate-limit:
-        - action:
-            max: 10                      
-            windowMs: 120000
+          - action:
+              max: 5
+              windowMs: 120000
       - key-auth:
       - proxy:
           - action:
@@ -111,9 +137,9 @@ pipelines:
       - outlet
     policies:
       - rate-limit:
-        - action:
-            max: 10                      
-            windowMs: 120000
+          - action:
+              max: 5
+              windowMs: 120000
       - key-auth:
       - proxy:
           - action:
@@ -125,10 +151,10 @@ pipelines:
       - account
     policies:
       - rate-limit:
-        - action:
-            max: 10                      
-            windowMs: 120000
-      - key-auth:
+          - action:
+              max: 5
+              windowMs: 120000
+      # - key-auth:
       - proxy:
           - action:
               serviceEndpoint: account
@@ -138,13 +164,13 @@ pipelines:
       - backend
     policies:
       - rate-limit:
-        - action:
-            max: 10                      
-            windowMs: 120000
+          - action:
+              max: 5
+              windowMs: 120000
       - key-auth:
-        - action:
-            apiKeyHeader: "authorization"
-            apiKeyHeaderScheme: "apiKey"
+          - action:
+              apiKeyHeader: "authorization"
+              apiKeyHeaderScheme: "apiKey"
       # - jwt:
       #   - action:
       #       secretOrPublicKeyFile: ./key/pubKey.pem
@@ -153,15 +179,15 @@ pipelines:
           - action:
               serviceEndpoint: backend
               changeOrigin: true
-              
+
   transaction:
     apiEndpoints:
       - transaction
     policies:
       - rate-limit:
-        - action:
-            max: 10                      
-            windowMs: 120000 
+          - action:
+              max: 5
+              windowMs: 120000
       - key-auth:
       - proxy:
           - action:
