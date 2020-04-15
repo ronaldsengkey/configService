@@ -14,9 +14,9 @@ admin:
   port: 8444
   host: "localhost"
 apiEndpoints:
-  ewallet:
+  wallet:
     host: "localhost"
-    paths: "/ewallet/*"
+    paths: "/wallet/*"
   config:
     host: "localhost"
     paths: "/config/*"
@@ -39,7 +39,7 @@ apiEndpoints:
     host: "localhost"
     paths: "/paymentGateway/*"
 serviceEndpoints:
-  ewallet:
+  wallet:
     url: "http://localhost:8089"
   config:
     url: "http://localhost:8002"
@@ -79,9 +79,9 @@ pipelines:
           - action:
               serviceEndpoint: httpbin
               changeOrigin: true
-  ewallet:
+  wallet:
     apiEndpoints:
-      - ewallet
+      - wallet
     policies:
       - rate-limit:
           - action:
@@ -89,7 +89,7 @@ pipelines:
               windowMs: 120000
       - proxy:
           - action:
-              serviceEndpoint: ewallet
+              serviceEndpoint: wallet
               changeOrigin: true
 
   paymentGateway:
