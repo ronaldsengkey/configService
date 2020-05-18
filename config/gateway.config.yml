@@ -9,7 +9,7 @@ https:
           ca: ["ssl/rootCA.pem"],
         },
     }
-  options: { requestCert: false, rejectUnauthorized: false }
+  # options: { requestCert: true, rejectUnauthorized: true }
 admin:
   port: 8444
   host: "localhost"
@@ -42,7 +42,7 @@ serviceEndpoints:
   wallet:
     url: "http://localhost:8089"
   config:
-    url: "http://localhost:8002"
+    url: "http://localhost:8442"
   authentications:
     url: "http://localhost:8202"
   outlet:
