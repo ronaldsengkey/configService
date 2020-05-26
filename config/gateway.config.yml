@@ -12,6 +12,7 @@
 # options: { requestCert: true, rejectUnauthorized: true }
 http:
   port: 8206
+  host: "localhost"
 admin:
   port: 8444
   host: "localhost"
