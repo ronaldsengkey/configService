@@ -1,48 +1,46 @@
-# https:
-#   port: 8443
-#   tls:
-#     {
-#       default:
-#         {
-#           cert: "ssl/server.crt",
-#           key: "ssl/server.key",
-#           ca: ["ssl/rootCA.pem"],
-#         },
-#     }
-# options: { requestCert: true, rejectUnauthorized: true }
-http:
-  port: 8206
+https:
+  port: 8443
+  tls:
+    "sandbox.api.ultipay.id":
+      cert: ./ssl/fullchain.pem
+      key: ./ssl/privkey.pem
+  options:
+    requestCert: false
+    rejectUnauthorized: false
+# http:
+#   port: 8206
+#   hostname: localhost
 admin:
   port: 8444
-  host: "localhost"
+  host: "sandbox.api.ultipay.id"
 apiEndpoints:
   wallet:
-    host: "localhost"
+    host: "sandbox.api.ultipay.id"
     paths: "/wallet/*"
   config:
-    host: "localhost"
+    host: "sandbox.api.ultipay.id"
     paths: "/config/*"
   authentications:
-    host: localhost
+    host: "sandbox.api.ultipay.id"
     paths: "/authentications/*"
   outlet:
-    host: localhost
+    host: "sandbox.api.ultipay.id"
     paths: "/outlet/*"
   account:
-    host: localhost
+    host: "sandbox.api.ultipay.id"
     paths: "/account/*"
   backend:
-    host: "localhost"
+    host: "sandbox.api.ultipay.id"
     paths: "/backend/*"
   transaction:
-    host: "localhost"
+    host: "sandbox.api.ultipay.id"
     paths: "/transaction/*"
   paymentGateway:
-    host: "localhost"
+    host: "sandbox.api.ultipay.id"
     paths: "/paymentGateway/*"
 serviceEndpoints:
   wallet:
-    url: "http://localhost:8204"
+    url: "http://localhost:8089"
   config:
     url: "http://localhost:8204"
   authentications:
