@@ -16,27 +16,35 @@ admin:
 apiEndpoints:
   wallet:
     host: "localhost"
-    paths: "/wallet/*"
+    methods: "GET,POST,PUT"
+    paths: ["/wallet/*", "/wallet"]
   config:
     host: "localhost"
+    methods: "GET,POST,PUT"
     paths: "/config/*"
   authentications:
-    host: localhost
+    host: "localhost"
+    methods: "GET,POST,PUT"
     paths: "/authentications/*"
   outlet:
-    host: localhost
+    host: "localhost"
+    methods: "GET,POST,PUT"
     paths: "/outlet/*"
   account:
-    host: localhost
+    host: "localhost"
+    methods: "GET,POST,PUT"
     paths: "/account/*"
   backend:
     host: "localhost"
+    methods: "GET,POST,PUT"
     paths: "/backend/*"
   transaction:
     host: "localhost"
+    methods: "GET,POST,PUT"
     paths: "/transaction/*"
   paymentGateway:
     host: "localhost"
+    methods: "GET,POST,PUT"
     paths: "/paymentGateway/*"
 serviceEndpoints:
   wallet:
