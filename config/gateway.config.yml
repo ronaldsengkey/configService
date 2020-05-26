@@ -1,14 +1,16 @@
-https:
+# https:
+#   port: 8443
+#   tls:
+#     {
+#       default:
+#         {
+#           cert: "ssl/server.crt",
+#           key: "ssl/server.key",
+#           ca: ["ssl/rootCA.pem"],
+#         },
+#     }
+http:
   port: 8443
-  tls:
-    {
-      default:
-        {
-          cert: "ssl/server.crt",
-          key: "ssl/server.key",
-          ca: ["ssl/rootCA.pem"],
-        },
-    }
   # options: { requestCert: true, rejectUnauthorized: true }
 admin:
   port: 8444
