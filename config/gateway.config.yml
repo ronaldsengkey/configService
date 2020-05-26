@@ -9,9 +9,9 @@
 #           ca: ["ssl/rootCA.pem"],
 #         },
 #     }
+# options: { requestCert: true, rejectUnauthorized: true }
 http:
-  port: 8443
-  # options: { requestCert: true, rejectUnauthorized: true }
+  port: 8206
 admin:
   port: 8444
   host: "localhost"
@@ -23,13 +23,13 @@ apiEndpoints:
     host: "localhost"
     paths: "/config/*"
   authentications:
-    host: "localhost"
+    host: localhost
     paths: "/authentications/*"
   outlet:
-    host: "localhost"
+    host: localhost
     paths: "/outlet/*"
   account:
-    host: "localhost"
+    host: localhost
     paths: "/account/*"
   backend:
     host: "localhost"
@@ -42,9 +42,9 @@ apiEndpoints:
     paths: "/paymentGateway/*"
 serviceEndpoints:
   wallet:
-    url: "http://localhost:8089"
+    url: "http://localhost:8204"
   config:
-    url: "http://localhost:8442"
+    url: "http://localhost:8204"
   authentications:
     url: "http://localhost:8202"
   outlet:
