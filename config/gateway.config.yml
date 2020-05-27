@@ -86,7 +86,7 @@ pipelines:
       - rate-limit:
           - action:
               max: 10
-              windowMs: 60000
+              windowMs: 90000
       - proxy:
           - action:
               serviceEndpoint: wallet
@@ -99,7 +99,7 @@ pipelines:
       - rate-limit:
           - action:
               max: 10
-              windowMs: 60000
+              windowMs: 90000
       - proxy:
           - action:
               serviceEndpoint: paymentGateway
@@ -112,7 +112,7 @@ pipelines:
       - rate-limit:
           - action:
               max: 10
-              windowMs: 60000
+              windowMs: 90000
       - proxy:
           - action:
               serviceEndpoint: config
@@ -125,7 +125,7 @@ pipelines:
       - rate-limit:
           - action:
               max: 10
-              windowMs: 60000
+              windowMs: 90000
       - key-auth:
       - proxy:
           - action:
@@ -139,7 +139,7 @@ pipelines:
       - rate-limit:
           - action:
               max: 10
-              windowMs: 60000
+              windowMs: 90000
       - key-auth:
       - proxy:
           - action:
@@ -153,7 +153,7 @@ pipelines:
       - rate-limit:
           - action:
               max: 10
-              windowMs: 60000
+              windowMs: 90000
       # - key-auth:
       - proxy:
           - action:
@@ -166,7 +166,7 @@ pipelines:
       - rate-limit:
           - action:
               max: 10
-              windowMs: 60000
+              windowMs: 90000
       - key-auth:
           - action:
               apiKeyHeader: "authorization"
@@ -187,7 +187,7 @@ pipelines:
       - rate-limit:
           - action:
               max: 10
-              windowMs: 60000
+              windowMs: 90000
       - key-auth:
       - proxy:
           - action:
