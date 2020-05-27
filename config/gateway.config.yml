@@ -85,8 +85,8 @@ pipelines:
     policies:
       - rate-limit:
           - action:
-              max: 5
-              windowMs: 120000
+              max: 10
+              windowMs: 60000
       - proxy:
           - action:
               serviceEndpoint: wallet
@@ -98,8 +98,8 @@ pipelines:
     policies:
       - rate-limit:
           - action:
-              max: 5
-              windowMs: 120000
+              max: 10
+              windowMs: 60000
       - proxy:
           - action:
               serviceEndpoint: paymentGateway
@@ -111,8 +111,8 @@ pipelines:
     policies:
       - rate-limit:
           - action:
-              max: 5
-              windowMs: 120000
+              max: 10
+              windowMs: 60000
       - proxy:
           - action:
               serviceEndpoint: config
@@ -124,8 +124,8 @@ pipelines:
     policies:
       - rate-limit:
           - action:
-              max: 5
-              windowMs: 120000
+              max: 10
+              windowMs: 60000
       - key-auth:
       - proxy:
           - action:
@@ -138,8 +138,8 @@ pipelines:
     policies:
       - rate-limit:
           - action:
-              max: 5
-              windowMs: 120000
+              max: 10
+              windowMs: 60000
       - key-auth:
       - proxy:
           - action:
@@ -152,8 +152,8 @@ pipelines:
     policies:
       - rate-limit:
           - action:
-              max: 5
-              windowMs: 120000
+              max: 10
+              windowMs: 60000
       # - key-auth:
       - proxy:
           - action:
@@ -165,8 +165,8 @@ pipelines:
     policies:
       - rate-limit:
           - action:
-              max: 5
-              windowMs: 120000
+              max: 10
+              windowMs: 60000
       - key-auth:
           - action:
               apiKeyHeader: "authorization"
@@ -186,8 +186,8 @@ pipelines:
     policies:
       - rate-limit:
           - action:
-              max: 5
-              windowMs: 120000
+              max: 10
+              windowMs: 60000
       - key-auth:
       - proxy:
           - action:
