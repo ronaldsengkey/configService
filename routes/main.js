@@ -28,6 +28,8 @@ async function route(fastify, options) {
 
         //Route List
         await fastify.get('/config/getApiService/:param', apiList.apiList);
+        await fastify.get('/config/test2', apiList.test2);
+        await fastify.get('/config/test3', apiList.test3);
 
         await fastify.post('/config/createApiService', {
             schema

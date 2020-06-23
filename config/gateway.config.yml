@@ -1,25 +1,28 @@
-https:
-  port: 8443
-  tls:
-    "sandbox.api.ultipay.id":
-      cert: ./ssl/fullchain.pem
-      key: ./ssl/privkey.pem
-  options:
-    requestCert: false
-    rejectUnauthorized: false
-# http:
-#   port: 8206
-#   hostname: localhost
+# https:
+#   port: 8443
+#   tls:
+#     "sandbox.api.ultipay.id":
+#       cert: ./ssl/fullchain.pem
+#       key: ./ssl/privkey.pem
+#   options:
+#     requestCert: false
+#     rejectUnauthorized: false
+http:
+  port: 8206
+  hostname: localhost
 admin:
   port: 8444
-  host: "sandbox.api.ultipay.id"
+  host: "localhost"
 apiEndpoints:
   wallet:
     host: "sandbox.api.ultipay.id"
     paths: "/wallet/*"
-  config:
-    host: "sandbox.api.ultipay.id"
-    paths: "/config/*"
+  config1:
+    host: "*"
+    paths: ["/config/getApiService/*", "/config/test2"]
+  config2:
+    host: "*"
+    paths: ["/config/test3"]
   authentications:
     host: "sandbox.api.ultipay.id"
     paths: "/authentications/*"
@@ -105,14 +108,28 @@ pipelines:
               serviceEndpoint: paymentGateway
               changeOrigin: true
 
-  config:
+  config1:
     apiEndpoints:
-      - config
+      - config1
     policies:
       - rate-limit:
           - action:
-              max: 10
-              windowMs: 90000
+              max: 5
+              windowMs: 20000
+      - proxy:
+          - action:
+              serviceEndpoint: config
+              changeOrigin: true
+
+  config2:
+    apiEndpoints:
+      - config2
+    policies:
+      - rate-limit:
+          - action:
+              max: 2
+              # windowMs: 90000
+              windowMs: 10000
       - proxy:
           - action:
               serviceEndpoint: config

@@ -10,6 +10,22 @@ let response = require("../routes/response"),
   cryptr = new Cryptr(pubKey),
   data = "";
 
+async function test2(request, reply) {
+  try {
+    return "Hello World test 2 !!";
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+async function test3(request, reply) {
+  try {
+    return "Hello World test 3 !!";
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 async function apiList(request, reply) {
   try {
     // Filter access request
@@ -77,4 +93,6 @@ async function createApi(request, reply) {
 module.exports = {
   apiList,
   createApi,
+  test2,
+  test3
 };
