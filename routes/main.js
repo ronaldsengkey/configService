@@ -31,6 +31,9 @@ async function route(fastify, options) {
         await fastify.get('/config/test2', apiList.test2);
         await fastify.get('/config/test3', apiList.test3);
 
+        // await fastify.post('/wallet/pin/validation', apiList.pinValidation);
+        // await fastify.post('/wallet/saldo', apiList.getSaldo);
+
         await fastify.post('/config/createApiService', {
             schema
         }, apiList.createApi);
