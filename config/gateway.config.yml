@@ -19,13 +19,86 @@ apiEndpoints:
   #   paths: "/wallet/*"
   walletPost:
     host: "*"
-    paths: ["/wallet/login", "/wallet/pin", "/wallet/pin/validation", "/wallet/saldo", "/wallet/ticketing", "/wallet/requestToken", "/wallet/checkToken", "/wallet/otp/request/email", "/wallet/otp/confirmation/{concern}", "/wallet/transaction/billFazz/postpaid", "/wallet/transaction/billFazz/inquiry", "/wallet/transaction/billFazz/prepaid/payment", "/wallet/transaction/mid/response", "/wallet/transaction/mid/response/error", "/wallet/transaction/splitBill/response", "/wallet/transaction/splitBill/request", "/wallet/summary/transaction", "/wallet/transaction", "/wallet/transaction/topup", "/wallet/transaction/splitBill", "/wallet/billing/{billingName}/{processName}", "/wallet/hotel/search", "/wallet/hotel/city/search", "/wallet/booking/search/{token}", "/wallet/merchant/search", "/wallet/merchant/book/{token}", "/wallet/flight/search", "/wallet/flight/addToCart", "/wallet/flight/getCart", "/wallet/flight/book", "/wallet/flight/order", "/wallet/flight/checkout", "/wallet/reservation", "/wallet/kyc", "/wallet/kyc/response/{token}", "/wallet/friend", "/wallet/friend/search", "/wallet/friend/request", "/wallet/friend/friendRequest", "/wallet/friend/response", "/wallet/product", "/wallet/bank/detail/{bankId}" ]
+    paths:
+      [
+        "/wallet/login",
+        "/wallet/pin",
+        "/wallet/pin/validation",
+        "/wallet/saldo",
+        "/wallet/ticketing",
+        "/wallet/requestToken",
+        "/wallet/checkToken",
+        "/wallet/otp/request/email",
+        "/wallet/otp/confirmation/*",
+        "/wallet/transaction/billFazz/postpaid",
+        "/wallet/transaction/billFazz/inquiry",
+        "/wallet/transaction/billFazz/prepaid/payment",
+        "/wallet/transaction/mid/response",
+        "/wallet/transaction/mid/response/error",
+        "/wallet/transaction/splitBill/response",
+        "/wallet/transaction/splitBill/request",
+        "/wallet/summary/transaction",
+        "/wallet/transaction",
+        "/wallet/transaction/topup",
+        "/wallet/transaction/splitBill",
+        "/wallet/billing/*",
+        "/wallet/hotel/search",
+        "/wallet/hotel/city/search",
+        "/wallet/booking/search/*",
+        "/wallet/merchant/search",
+        "/wallet/merchant/book/*",
+        "/wallet/flight/search",
+        "/wallet/flight/addToCart",
+        "/wallet/flight/getCart",
+        "/wallet/flight/book",
+        "/wallet/flight/order",
+        "/wallet/flight/checkout",
+        "/wallet/reservation",
+        "/wallet/kyc",
+        "/wallet/kyc/response/*",
+        "/wallet/friend",
+        "/wallet/friend/search",
+        "/wallet/friend/request",
+        "/wallet/friend/friendRequest",
+        "/wallet/friend/response",
+        "/wallet/product",
+        "/wallet/bank/detail/*",
+      ]
   walletGet:
     host: "*"
-    paths: ["/wallet/transaction/billFazz", "/wallet/card", "/wallet/card/category", "/wallet/card/background", "/wallet/promotion/outlet", "/wallet/transaction/history", "/wallet/merchant/{token}", "/wallet/merchant/detail/{token}", "/wallet/booking/{token}", "/wallet/clientKey/request", "/wallet/roles/{token}", "/wallet/mynotif", "/wallet/transaction/basket", "/wallet/transaction/category", "/wallet/transaction/detail/{transactionId}/{transactionCode}", "/wallet/transaction/mid/finish", "/wallet/transaction/mid/unfinish", "/wallet/bank", "/wallet/location", "/wallet/saldo/generate", "/wallet/kyc/allList/{token}" ]
+    paths:
+      [
+        "/wallet/transaction/billFazz",
+        "/wallet/card",
+        "/wallet/card/category",
+        "/wallet/card/background",
+        "/wallet/promotion/outlet",
+        "/wallet/transaction/history",
+        "/wallet/merchant/*",
+        "/wallet/merchant/detail/*",
+        "/wallet/booking/*",
+        "/wallet/clientKey/request",
+        "/wallet/roles/*",
+        "/wallet/mynotif",
+        "/wallet/transaction/basket",
+        "/wallet/transaction/category",
+        "/wallet/transaction/detail/*",
+        "/wallet/transaction/mid/finish",
+        "/wallet/transaction/mid/unfinish",
+        "/wallet/bank",
+        "/wallet/location",
+        "/wallet/saldo/generate",
+        "/wallet/kyc/allList/*",
+      ]
   walletPut:
     host: "*"
-    paths: ["/wallet/changeRequest/registration/phone/{deviceId}", "/wallet/change/registration/email/{deviceId}", "/wallet/otp/{deviceId}", "/wallet/logout"]
+    paths:
+      [
+        "/wallet/changeRequest/registration/phone/*",
+        "/wallet/change/registration/email/*",
+        "/wallet/otp/*",
+        "/wallet/logout",
+      ]
   config1:
     host: "*"
     paths: ["/config/getApiService/*", "/config/test2"]
@@ -91,24 +164,38 @@ pipelines:
           - action:
               serviceEndpoint: httpbin
               changeOrigin: true
-  wallet:
-    apiEndpoints:
-      - wallet
-    policies:
-      - rate-limit:
-          - action:
-              max: 10
-              windowMs: 90000
+  # wallet:
+  #   apiEndpoints:
+  #     - wallet
+  #   policies:
+  #     - rate-limit:
+  #         - action:
+  #             max: 10
+  #             windowMs: 90000
 
-      - proxy:
-          - action:
-              serviceEndpoint: wallet
-              changeOrigin: true
+  #     - proxy:
+  #         - action:
+  #             serviceEndpoint: wallet
+  #             changeOrigin: true
 
   walletPost:
     apiEndpoints:
       - walletPost
     policies:
+      - cors:
+          - action:
+              origin: true
+              methods: ["POST"]
+              allowedHeaders:
+                [
+                  "Content-type",
+                  "Origin",
+                  "Accept",
+                  "X-Requested-With",
+                  "X-TEST",
+                ]
+              credentials: true
+              preflightContinue: true
       - rate-limit:
           - action:
               max: 5
@@ -122,6 +209,20 @@ pipelines:
     apiEndpoints:
       - walletGet
     policies:
+      - cors:
+          - action:
+              origin: true
+              methods: ["GET"]
+              allowedHeaders:
+                [
+                  "Content-type",
+                  "Origin",
+                  "Accept",
+                  "X-Requested-With",
+                  "X-TEST",
+                ]
+              credentials: true
+              preflightContinue: true
       - rate-limit:
           - action:
               max: 10
@@ -135,6 +236,20 @@ pipelines:
     apiEndpoints:
       - walletPut
     policies:
+      - cors:
+          - action:
+              origin: true
+              methods: ["PUT"]
+              allowedHeaders:
+                [
+                  "Content-type",
+                  "Origin",
+                  "Accept",
+                  "X-Requested-With",
+                  "X-TEST",
+                ]
+              credentials: true
+              preflightContinue: true
       - rate-limit:
           - action:
               max: 5
@@ -142,8 +257,8 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: wallet
-              changeOrigin: true              
-              
+              changeOrigin: true
+
   paymentGateway:
     apiEndpoints:
       - paymentGateway
@@ -175,7 +290,7 @@ pipelines:
                   "X-TEST",
                 ]
               credentials: true
-              preflightContinue: false             
+              preflightContinue: false
       - rate-limit:
           - action:
               max: 5
