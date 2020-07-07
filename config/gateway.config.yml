@@ -103,7 +103,7 @@ apiEndpoints:
     host: "*"
     paths:
       [
-        "/wallet/cronjob/billfazz/",
+        "/wallet/cronjob/billfazz/", "/wallet/cronjob/saveSaldo/", "/wallet/cronjob/getSaldo/{id}/",
       ]  
   config1:
     host: "*"
@@ -272,7 +272,7 @@ pipelines:
       - cors:
           - action:
               origin: true
-              methods: ["POST"]
+              methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"]
               allowedHeaders:
                 [
                   "Content-type",
