@@ -99,6 +99,12 @@ apiEndpoints:
         "/wallet/otp/*",
         "/wallet/logout",
       ]
+  walletCronJob:
+    host: "*"
+    paths:
+      [
+        "/wallet/cronjob/billfazz/",
+      ]  
   config1:
     host: "*"
     paths: ["/config/getApiService/*", "/config/test2"]
@@ -127,7 +133,7 @@ serviceEndpoints:
   wallet:
     url: "http://localhost:8089"
   config:
-    url: "http://localhost:8204"
+    url: "http://localhost:8004"
   authentications:
     url: "http://localhost:8202"
   outlet:
@@ -253,6 +259,33 @@ pipelines:
       - rate-limit:
           - action:
               max: 5
+              windowMs: 90000
+      - proxy:
+          - action:
+              serviceEndpoint: wallet
+              changeOrigin: true
+
+  walletCronJob:
+    apiEndpoints:
+      - walletCronJob
+    policies:
+      - cors:
+          - action:
+              origin: true
+              methods: ["POST"]
+              allowedHeaders:
+                [
+                  "Content-type",
+                  "Origin",
+                  "Accept",
+                  "X-Requested-With",
+                  "X-TEST",
+                ]
+              credentials: true
+              preflightContinue: true
+      - rate-limit:
+          - action:
+              max: 25
               windowMs: 90000
       - proxy:
           - action:
