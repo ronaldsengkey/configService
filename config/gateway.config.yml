@@ -133,7 +133,7 @@ serviceEndpoints:
   wallet:
     url: "http://localhost:8089"
   config:
-    url: "http://localhost:8004"
+    url: "http://localhost:8204"
   authentications:
     url: "http://localhost:8202"
   outlet:
