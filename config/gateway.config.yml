@@ -5,7 +5,7 @@ https:
       cert: ./ssl/fullchain.pem
       key: ./ssl/privkey.pem
   options:
-    requestCert: false
+    requestCert: true
     rejectUnauthorized: false
 # http:
 #   port: 8006
