@@ -89,6 +89,7 @@ apiEndpoints:
         "/wallet/location",
         "/wallet/saldo/generate",
         "/wallet/kyc/allList/*",
+        "/wallet/version/checkUpdate"
       ]
   walletPut:
     host: "*"
