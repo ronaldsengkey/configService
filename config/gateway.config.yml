@@ -4,9 +4,9 @@ https:
     "sandbox.api.ultipay.id":
       cert: ./ssl/fullchain.pem
       key: ./ssl/privkey.pem
-  options:
-    requestCert: false
-    rejectUnauthorized: false
+  # options:
+  #   requestCert: false
+  #   rejectUnauthorized: false
 # http:
 #   port: 8006
 #   hostname: localhost
