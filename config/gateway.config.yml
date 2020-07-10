@@ -1,15 +1,15 @@
-https:
-  port: 8443
-  tls:
-    "sandbox.api.ultipay.id":
-      cert: ./ssl/fullchain.pem
-      key: ./ssl/privkey.pem
+# https:
+#   port: 8443
+#   tls:
+#     "sandbox.api.ultipay.id":
+#       cert: ./ssl/fullchain.pem
+#       key: ./ssl/privkey.pem
   # options:
   #   requestCert: false
   #   rejectUnauthorized: false
-# http:
-#   port: 8006
-#   hostname: localhost
+http:
+  port: 8006
+  hostname: localhost
 admin:
   port: 8444
   host: "localhost"
@@ -63,7 +63,7 @@ apiEndpoints:
         "/wallet/friend/response",
         "/wallet/product",
         "/wallet/bank/detail/*",
-        "wallet/confirmDevice"
+        "/wallet/confirmDevice"
       ]
   walletGet:
     host: "*"
