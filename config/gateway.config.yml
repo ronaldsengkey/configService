@@ -63,6 +63,7 @@ apiEndpoints:
         "/wallet/friend/response",
         "/wallet/product",
         "/wallet/bank/detail/*",
+        "wallet/confirmDevice"
       ]
   walletGet:
     host: "*"
@@ -89,7 +90,7 @@ apiEndpoints:
         "/wallet/location",
         "/wallet/saldo/generate",
         "/wallet/kyc/allList/*",
-        "/wallet/version/checkUpdate"
+        "/wallet/version/checkUpdate/"
       ]
   walletPut:
     host: "*"
