@@ -68,7 +68,7 @@ apiEndpoints:
         "/wallet/customer/verify/email/*",
         "/wallet/customer/detail",
         "/wallet/customer/balanceSheet",
-        "/wallet/customer/forgotPassword"
+        "/wallet/customer/forgotPassword",
         "/wallet/customer/profile"
       ]
   walletGet:
