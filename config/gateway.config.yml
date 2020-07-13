@@ -90,12 +90,12 @@ apiEndpoints:
         "/wallet/location",
         "/wallet/saldo/generate",
         "/wallet/kyc/allList/*",
-        "/wallet/version/checkUpdate/"
+        "/wallet/version/checkUpdate/",
         "/wallet/partner/viewProfile/*",
         "/wallet/cronjob/getCustomer",
         "/wallet/customer",
         "/wallet/customer/verify/kyc",
-        "/wallet/customer/request/*",
+        "/wallet/customer/request/*"
       ]
   walletPut:
     host: "*"
