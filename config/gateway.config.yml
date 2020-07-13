@@ -28,7 +28,7 @@ apiEndpoints:
         "/wallet/ticketing",
         "/wallet/requestToken",
         "/wallet/checkToken",
-        "/wallet/otp/request/email",
+        "/wallet/otp/request/*",
         "/wallet/otp/confirmation/*",
         "/wallet/transaction/billFazz/postpaid",
         "/wallet/transaction/billFazz/inquiry",
@@ -69,7 +69,6 @@ apiEndpoints:
     host: "*"
     paths:
       [
-        "/wallet/transaction/billFazz",
         "/wallet/card",
         "/wallet/card/category",
         "/wallet/card/background",
@@ -81,6 +80,7 @@ apiEndpoints:
         "/wallet/clientKey/request",
         "/wallet/roles/*",
         "/wallet/mynotif",
+        "/wallet/transaction/billFazz",
         "/wallet/transaction/basket",
         "/wallet/transaction/category",
         "/wallet/transaction/detail/*",
@@ -91,6 +91,11 @@ apiEndpoints:
         "/wallet/saldo/generate",
         "/wallet/kyc/allList/*",
         "/wallet/version/checkUpdate/"
+        "/wallet/partner/viewProfile/*",
+        "/wallet/cronjob/getCustomer",
+        "/wallet/customer",
+        "/wallet/customer/verify/kyc",
+        "/wallet/customer/request/*",
       ]
   walletPut:
     host: "*"
@@ -100,12 +105,13 @@ apiEndpoints:
         "/wallet/change/registration/email/*",
         "/wallet/otp/*",
         "/wallet/logout",
+        "/wallet/profile/image/update",
       ]
   walletCronJob:
     host: "*"
     paths:
       [
-        "/wallet/cronjob/billfazz/", "/wallet/cronjob/saveSaldo/", "/wallet/cronjob/getSaldo/{id}/",
+        "/wallet/cronjob/billfazz/", "/wallet/cronjob/saveSaldo/", "/wallet/cronjob/getSaldo/*",
       ]  
   config1:
     host: "*"
