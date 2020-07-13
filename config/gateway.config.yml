@@ -63,7 +63,13 @@ apiEndpoints:
         "/wallet/friend/response",
         "/wallet/product",
         "/wallet/bank/detail/*",
-        "/wallet/confirmDevice"
+        "/wallet/confirmDevice",
+        "/wallet/register/customer",
+        "/wallet/customer/verify/email/*",
+        "/wallet/customer/detail",
+        "/wallet/customer/balanceSheet",
+        "/wallet/customer/forgotPassword"
+        "/wallet/customer/profile"
       ]
   walletGet:
     host: "*"
