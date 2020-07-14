@@ -219,7 +219,7 @@ pipelines:
               preflightContinue: true
       - rate-limit:
           - action:
-              max: 5
+              max: 10
               windowMs: 90000
       - proxy:
           - action:
@@ -246,7 +246,7 @@ pipelines:
               preflightContinue: true
       - rate-limit:
           - action:
-              max: 10
+              max: 15
               windowMs: 90000
       - proxy:
           - action:
@@ -273,7 +273,7 @@ pipelines:
               preflightContinue: true
       - rate-limit:
           - action:
-              max: 5
+              max: 10
               windowMs: 90000
       - proxy:
           - action:
