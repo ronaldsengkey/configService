@@ -69,7 +69,8 @@ apiEndpoints:
         "/wallet/customer/detail",
         "/wallet/customer/balanceSheet",
         "/wallet/customer/forgotPassword",
-        "/wallet/customer/profile"
+        "/wallet/customer/profile",
+        "/wallet/transaction/check/limit",
       ]
   walletGet:
     host: "*"
