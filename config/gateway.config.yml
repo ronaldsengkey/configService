@@ -102,7 +102,7 @@ apiEndpoints:
         "/wallet/cronjob/getCustomer",
         "/wallet/customer",
         "/wallet/customer/verify/kyc",
-        "/wallet/customer/request/*"
+        "/wallet/customer/request/*",
       ]
   walletPut:
     host: "*"
@@ -118,8 +118,10 @@ apiEndpoints:
     host: "*"
     paths:
       [
-        "/wallet/cronjob/billfazz/", "/wallet/cronjob/saveSaldo/", "/wallet/cronjob/getSaldo/*",
-      ]  
+        "/wallet/cronjob/billfazz/",
+        "/wallet/cronjob/saveSaldo/",
+        "/wallet/cronjob/getSaldo/*",
+      ]
   config1:
     host: "*"
     paths: ["/config/getApiService/*", "/config/test2"]
@@ -219,7 +221,7 @@ pipelines:
               preflightContinue: true
       - rate-limit:
           - action:
-              max: 10
+              max: 15
               windowMs: 90000
       - proxy:
           - action:
