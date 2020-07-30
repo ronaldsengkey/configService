@@ -128,9 +128,15 @@ apiEndpoints:
   config2:
     host: "*"
     paths: ["/config/test3"]
-  authentications:
+  withdraw:
     host: "sandbox.api.ultipay.id"
-    paths: "/authentications/*"
+    paths: "/withdraw/*"
+  authentication:
+    host: "sandbox.api.ultipay.id"
+    paths: "/authentication/*"
+  notification:
+    host: "sandbox.api.ultipay.id"
+    paths: "/notification/*"
   outlet:
     host: "sandbox.api.ultipay.id"
     paths: "/outlet/*"
@@ -149,18 +155,22 @@ apiEndpoints:
 serviceEndpoints:
   wallet:
     url: "http://localhost:8089"
-  config:
-    url: "http://localhost:8204"
+  transaction:
+    url: "http://localhost:8201"
   authentications:
     url: "http://localhost:8202"
+  backend:
+    url: "http://localhost:8203"
+  withdraw:
+    url: "http://localhost:8204"
   outlet:
     url: "http://localhost:8205"
   account:
     url: "http://localhost:8206"
-  backend:
-    url: "http://localhost:8203"
-  transaction:
-    url: "http://localhost:8201"
+  notification:
+    url: "http://localhost:8207"
+  config:
+    url: "http://localhost:8208"
   paymentGateway:
     url: "http://localhost:8200"
   httpbin:
@@ -309,6 +319,19 @@ pipelines:
               serviceEndpoint: wallet
               changeOrigin: true
 
+  notification:
+    apiEndpoints:
+      - notification
+    policies:
+      - rate-limit:
+          - action:
+              max: 10
+              windowMs: 90000
+      - proxy:
+          - action:
+              serviceEndpoint: notification
+              changeOrigin: true
+
   paymentGateway:
     apiEndpoints:
       - paymentGateway
@@ -364,9 +387,23 @@ pipelines:
               serviceEndpoint: config
               changeOrigin: true
 
-  authentications:
+  withdraw:
     apiEndpoints:
-      - authentications
+      - withdraw
+    policies:
+      - rate-limit:
+          - action:
+              max: 10
+              windowMs: 90000
+      - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: withdraw
+              changeOrigin: true
+
+  authentication:
+    apiEndpoints:
+      - authentication
     policies:
       - rate-limit:
           - action:
