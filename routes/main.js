@@ -1,11 +1,12 @@
 "use strict";
 const boom = require('boom');
 let apiList = require("../services/apiList"),
+    sa = require("../services/serviceAnalytic"),
     response = require("./response");
 
 async function route(fastify, options) {
     try {
-
+        await sa.mainServiceAnalytic();
         // Schema validator
         const schema = {
             body: {
@@ -26,6 +27,28 @@ async function route(fastify, options) {
             }
         }
 
+        // const schemaServiceAnalytic = {
+        //     body: {
+        //         type: 'object',
+        //         additionalProperties: false,
+        //         required: ['serviceName', 'responseCode', 'status', 'cpuProfiling'],
+        //         properties: {
+        //             serviceName: {
+        //                 type: 'string'
+        //             },
+        //             responseCode: {
+        //                 type: 'string'
+        //             },
+        //             status: {
+        //                 type: 'string'
+        //             },
+        //             cpuProfiling: {
+        //                 type: 'string'
+        //             }
+        //         }
+        //     }
+        // }
+
         //Route List
         await fastify.get('/config/getApiService/:param', apiList.apiList);
         await fastify.get('/config/test2', apiList.test2);
@@ -37,8 +60,14 @@ async function route(fastify, options) {
         await fastify.post('/config/createApiService', {
             schema
         }, apiList.createApi);
+
+        // await fastify.post('/config/createServiceAnalytic', {
+        //     schemaServiceAnalytic
+        // }, sa.createServiceAnalytic);
+        await fastify.post('/config/deleteServiceAnalytic', {}, sa.deleteServiceAnalytic);
     } catch (err) {
         boom.boomify(err);
+        console.log('err =>',err)
         return response.serverError(err, "Internal server error", reply);
     }
 }
