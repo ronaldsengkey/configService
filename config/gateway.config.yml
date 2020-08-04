@@ -325,7 +325,7 @@ pipelines:
     policies:
       - rate-limit:
           - action:
-              max: 10
+              max: 20
               windowMs: 90000
       - proxy:
           - action:
@@ -393,9 +393,9 @@ pipelines:
     policies:
       - rate-limit:
           - action:
-              max: 10
+              max: 20
               windowMs: 90000
-      - key-auth:
+      # - key-auth:
       - proxy:
           - action:
               serviceEndpoint: withdraw
@@ -407,9 +407,9 @@ pipelines:
     policies:
       - rate-limit:
           - action:
-              max: 10
+              max: 20
               windowMs: 90000
-      - key-auth:
+      # - key-auth:
       - proxy:
           - action:
               serviceEndpoint: authentications
@@ -421,9 +421,9 @@ pipelines:
     policies:
       - rate-limit:
           - action:
-              max: 10
+              max: 20
               windowMs: 90000
-      - key-auth:
+      # - key-auth:
       - proxy:
           - action:
               serviceEndpoint: outlet
@@ -435,7 +435,7 @@ pipelines:
     policies:
       - rate-limit:
           - action:
-              max: 10
+              max: 20
               windowMs: 90000
       # - key-auth:
       - proxy:
@@ -448,9 +448,9 @@ pipelines:
     policies:
       - rate-limit:
           - action:
-              max: 10
+              max: 20
               windowMs: 90000
-      - key-auth:
+          # - key-auth:
           - action:
               apiKeyHeader: "authorization"
               apiKeyHeaderScheme: "apiKey"
@@ -469,9 +469,9 @@ pipelines:
     policies:
       - rate-limit:
           - action:
-              max: 10
+              max: 20
               windowMs: 90000
-      - key-auth:
+      # - key-auth:
       - proxy:
           - action:
               serviceEndpoint: transaction
