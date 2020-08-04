@@ -1,15 +1,16 @@
-# https:
+https:
+  port: 8443
+  tls:
+    "sandbox.api.ultipay.id":
+      cert: ./ssl/fullchain.pem
+      key: ./ssl/privkey.pem
+  # options:
+  #   requestCert: false
+  #   rejectUnauthorized: false
+# http:
 #   port: 8443
-#   tls:
-#     "sandbox.api.ultipay.id":
-#       cert: ./ssl/fullchain.pem
-#       key: ./ssl/privkey.pem
-#   # options:
-#   #   requestCert: false
-#   #   rejectUnauthorized: false
-http:
-  port: 8006
-  hostname: localhost
+#   hostname: 
+#   # hostname: 192.168.0.59
 admin:
   port: 8444
   host: "localhost"
@@ -129,28 +130,28 @@ apiEndpoints:
     host: "*"
     paths: ["/config/test3"]
   withdraw:
-    host: "sandbox.api.ultipay.id"
+    host: "*"
     paths: "/withdraw/*"
   authentication:
-    host: "sandbox.api.ultipay.id"
+    host: "*"
     paths: "/authentication/*"
   notification:
-    host: "sandbox.api.ultipay.id"
+    host: "*"
     paths: "/notification/*"
   outlet:
-    host: "sandbox.api.ultipay.id"
+    host: "*"
     paths: "/outlet/*"
   account:
-    host: "sandbox.api.ultipay.id"
+    host: "*"
     paths: "/account/*"
   backend:
-    host: "sandbox.api.ultipay.id"
+    host: "*"
     paths: "/backend/*"
   transaction:
-    host: "sandbox.api.ultipay.id"
+    host: "*"
     paths: "/transaction/*"
   paymentGateway:
-    host: "sandbox.api.ultipay.id"
+    host: "*"
     paths: "/paymentGateway/*"
 serviceEndpoints:
   wallet:
