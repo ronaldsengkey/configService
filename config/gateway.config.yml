@@ -468,7 +468,7 @@ pipelines:
     policies:
       - rate-limit:
           - action:
-              max: 20
+              max: 100
               windowMs: 90000
           # - key-auth:
           - action:
