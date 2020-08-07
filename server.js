@@ -73,7 +73,7 @@ const start = async () => {
   try {
     fastify.use(helmet());
 
-    let a = await fastify.listen(8208);
+    let a = await fastify.listen(8209);
 
     fastify.log.info(`server listening on ${fastify.server.address().port}`);
   } catch (err) {

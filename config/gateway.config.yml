@@ -9,7 +9,7 @@ https:
   #   rejectUnauthorized: false
 # http:
 #   port: 8443
-#   hostname: 
+#   hostname:
 #   # hostname: 192.168.0.59
 admin:
   port: 8444
@@ -147,6 +147,9 @@ apiEndpoints:
   backend:
     host: "*"
     paths: "/backend/*"
+  logService:
+    host: "*"
+    paths: "/log/*"
   transaction:
     host: "*"
     paths: "/transaction/*"
@@ -170,8 +173,10 @@ serviceEndpoints:
     url: "http://localhost:8206"
   notification:
     url: "http://localhost:8207"
-  config:
+  logService:
     url: "http://localhost:8208"
+  config:
+    url: "http://localhost:8209"
   paymentGateway:
     url: "http://localhost:8200"
   httpbin:
@@ -386,6 +391,20 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: config
+              changeOrigin: true
+
+  logService:
+    apiEndpoints:
+      - logService
+    policies:
+      - rate-limit:
+          - action:
+              max: 50
+              # windowMs: 90000
+              windowMs: 90000
+      - proxy:
+          - action:
+              serviceEndpoint: logService
               changeOrigin: true
 
   withdraw:
