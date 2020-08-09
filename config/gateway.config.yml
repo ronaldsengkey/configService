@@ -427,7 +427,7 @@ pipelines:
     policies:
       - rate-limit:
           - action:
-              max: 50
+              max: 25
               windowMs: 90000
       # - key-auth:
       - proxy:
@@ -468,7 +468,7 @@ pipelines:
     policies:
       - rate-limit:
           - action:
-              max: 100
+              max: 25
               windowMs: 90000
           # - key-auth:
           # - action:
