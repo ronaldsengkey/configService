@@ -1,10 +1,12 @@
 "use strict";
 const boom = require("boom");
+const { set } = require("mongoose");
 let response = require("../routes/response"),
   mongoose = require("mongoose").set("debug", true),
   mongoConf = require("../config/mongo"),
   apiSchema = require("./apiListSchema"),
   serviceAnalytic = require("./serviceAnalyticsSchema"),
+  serviceParent = require("./serviceParentSchema"),
   fs = require("fs"),
   pubKey = fs.readFileSync("./publicKey.key", "utf8"),
   Cryptr = require("cryptr"),
@@ -49,15 +51,17 @@ async function postServiceAnalytic(data) {
         var ioServer = require('socket.io-client')(server);
         var socket = ioServer.connect(server);
         socket.on('createServiceAnalytic', async function (data) {
-            await createServiceAnalytic(data)
+          data.domain = process.env.MONGODB_HOST;
+          await createServiceAnalytic(data);
         });
         socket.on("disconnect", async function () {
             let ds = {
                 "serviceName": data,
                 "status": "off",
-                "cpuProfiling": "{}"
+                "cpuProfiling": "{}",
+                "domain": process.env.MONGODB_HOST
             }
-            await createServiceAnalytic(ds);
+            await createServiceAnalytic(ds);           
         });
 
     } catch (err) {
@@ -71,7 +75,13 @@ async function createServiceAnalytic(data) {
     await mongoose.connect(mongoConf.mongoDb.url, {
       useNewUrlParser: true,
     });
-
+    // mongoose.set('debug', false);
+    await serviceParent.findOneAndUpdate({"serviceName": data.serviceName, "domain": data.domain, "category": "service"}, {
+      $set: {
+        status: data.status
+      }
+    })
+    
     // Declare data object to save
     let newServiceAnalytic = new serviceAnalytic({
       serviceName: data.serviceName,
