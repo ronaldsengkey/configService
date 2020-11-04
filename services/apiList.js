@@ -37,7 +37,14 @@ async function apiList(request, reply) {
     // let query = await apiSchema.find({
     //   fieldTypeOrigin: param,
     // });
-    let query = await apiSchema.find({});
+    var f = {}
+
+    if(param != 'all'){
+      f = {
+        "category": param
+      }
+    }
+    let query = await apiSchema.find(f);
     if (query.length > 0) {
       // Return response
       await mongoose.connection.close();
