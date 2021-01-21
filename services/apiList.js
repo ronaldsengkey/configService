@@ -10,9 +10,11 @@ let response = require("../routes/response"),
   Cryptr = require("cryptr"),
   cryptr = new Cryptr(pubKey),
   data = "";
+let io = require('./socketServer').io;
 
 async function test2(request, reply) {
   try {
+    io.emit('tes', 'tes');
     return "Hello World test 2 !!";
   } catch (err) {
     console.log(err)

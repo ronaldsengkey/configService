@@ -8,9 +8,46 @@ const axios = require("axios");
 const helmet = require("helmet");
 require("dotenv").config();
 const boom = require('boom');
-gateway().load(path.join(__dirname, "config")).run();
+// gateway().load(path.join(__dirname, "config")).run();
 
 fastify.register(require('./routes/main'));
+
+const io = require('./services/socketServer').listen(fastify.server);
+const socketService = require('./services/socketService');
+
+fastify.get('/config/update/:type', async function(req, res){
+  console.log('/update::');
+  let result = false;
+  const code = req.headers.code;
+  const param = req.headers.param;
+  const type = req.params.type;
+  try {
+    if (code == process.env.SERVICE_CODE) {
+      console.log('type::', type);
+      switch (type) {
+        case 'service':
+          io.emit('updateService', param); 
+          result = 'success';  
+          break;
+        
+        case 'ticket':
+          let data = await socketService.getTicketing();
+          if (data) {
+              io.emit('getTicketing', data);   
+          }
+          result = 'success';
+          break;
+
+        default:
+          break;
+      } 
+    }
+  } catch (error) {
+    console.log('error::', error);
+    result = error; 
+  }
+  res.send('update::' + result);
+})
 
 // async function actionPost(data) {
 //   try {
@@ -74,6 +111,13 @@ const start = async () => {
     fastify.use(helmet());
 
     let a = await fastify.listen(8209, "0.0.0.0");
+    // io.on('connection', async function (socket) {
+    //   console.log('Socket Connect::' + socket.id);
+
+    //   socket.on('disconnect', async function () {
+    //     console.log('Socket Disconn::' + socket.id);
+    //   })
+    // })
     // await fastify.listen(serverPort, "0.0.0.0");
 
     fastify.log.info(`server listening on ${fastify.server.address().port}`);

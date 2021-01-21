@@ -7,6 +7,10 @@ const apiSchema = new Schema({
         type: String,
         required: true
     },
+    hostName: {
+        type: String,
+        required: false
+    },
     domain: {
         // Example (sandbox.api.ultipay.id)
         type: String,

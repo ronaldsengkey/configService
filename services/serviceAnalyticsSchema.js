@@ -7,6 +7,10 @@ const apiSchema = new Schema({
         type: String,
         required: true
     },
+    domain: {
+        type: String,
+        required: true
+    },
     // responseCode: {
     //     type: String,
     //     required: true

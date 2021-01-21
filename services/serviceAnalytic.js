@@ -12,6 +12,8 @@ let response = require("../routes/response"),
   Cryptr = require("cryptr"),
   cryptr = new Cryptr(pubKey),
   data = "";
+let io = require('./socketServer').io;
+const reqService = require('./requestService');
 
 async function mainServiceAnalytic() {
     try {
@@ -69,6 +71,7 @@ async function postServiceAnalytic(data) {
     }        
 }
 async function createServiceAnalytic(data) {
+  console.log('createServiceAnalytic::', data);
   let res = {};
   try {
     // Run mongoose connection
@@ -76,21 +79,30 @@ async function createServiceAnalytic(data) {
       useNewUrlParser: true,
     });
     // mongoose.set('debug', false);
-    await serviceParent.findOneAndUpdate({"serviceName": data.serviceName, "domain": data.domain, "category": "service"}, {
+    let update = await serviceParent.findOneAndUpdate({"serviceName": data.serviceName, "domain": data.domain, "category": "service"}, {
       $set: {
         status: data.status
       }
     })
+    console.log("createServiceAnalytic::", update);
     
     // Declare data object to save
     let newServiceAnalytic = new serviceAnalytic({
       serviceName: data.serviceName,
       // responseCode: data.responseCode,
+      domain: data.domain,
       status: data.status,
       cpuProfiling: data.cpuProfiling,
     });
 
     let na = await newServiceAnalytic.save();
+    console.log("na::", na);
+    updateSocket({
+      id: update.id,
+      serviceName: data.serviceName,
+      status: data.status,
+      cpuProfiling: data.cpuProfiling,
+    });
     await mongoose.connection.close();
     if (na) {
       res.responseCode = process.env.SUCCESS_RESPONSE;
@@ -139,10 +151,53 @@ async function deleteServiceAnalytic() {
       return res
     }
   }
-  
+
+async function getApiService(){
+  try {
+    let result = [];
+    await mongoose.connect(mongoConf.mongoDb.url, {
+      useNewUrlParser: true,
+    });
+    let datas = await serviceParent.find({});
+    for(let data of datas){
+      console.log('data::', data.hostName);
+      result.push({
+        id: data._id,
+        serviceName: data.serviceName,
+        domain: data.domain,
+        hostName: data.hostName,
+        port: data.port,
+        server: data.server,
+        category: data.category,
+        status: data.status,
+        performance: await serviceAnalytic.find({serviceName: data.serviceName, domain: data.domain}).sort({'createdDate': -1}).limit(10)
+      })
+    }
+    await mongoose.connection.close();
+    console.log('data::', result);
+    return result;
+  } catch (error) {
+    console.log('error::', error);
+    return error;
+  }
+}
+
+async function updateSocket(data){
+  var options = {
+    'method': 'GET',
+    'url': process.env.CONFIG_SERVER + '/update/service',
+    'headers': {
+      'param': JSON.stringify(data),
+      'code': process.env.SERVICE_CODE
+    }
+  };
+  reqService.sendRequest(options);
+}
+
 module.exports = {
   createServiceAnalytic,
   deleteServiceAnalytic,
   mainServiceAnalytic,
-  postServiceAnalytic
+  postServiceAnalytic,
+  getApiService
 };
