@@ -50,15 +50,17 @@ function listen(app){
             createService(data);
             service[socket.id] = data;
             socket.emit('dashboardConnect', 'success');
-            console.log("dashboardConnect::", socket.id, service);
+            console.log("dashboardConnect::", service[socket.id]);
         })
 
         socket.on('disconnect', () => {
             try {
+                console.log("disconnect::", service[socket.id]);
                 service[socket.id].status = 'off';
+                service[socket.id].cpuProfiling = '{}';
                 createService(service[socket.id]);
                 delete service[socket.id];
-                console.log("service::", service);
+                // console.log("service::", service);
             } catch (error) {
                 // console.log("error::", error);
             }
