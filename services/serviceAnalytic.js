@@ -17,14 +17,14 @@ const reqService = require('./requestService');
 
 async function mainServiceAnalytic() {
     try {
-        await postServiceAnalytic('account');
-        await postServiceAnalytic('transaction');
-        await postServiceAnalytic('notification');        
-        await postServiceAnalytic('authentications');
-        await postServiceAnalytic('backend');
-        await postServiceAnalytic('withdraw');
-        await postServiceAnalytic('outlet');
-        await postServiceAnalytic('wallet');
+        //await postServiceAnalytic('account');
+        //await postServiceAnalytic('transaction');
+        //await postServiceAnalytic('notification');        
+        //await postServiceAnalytic('authentications');
+        //await postServiceAnalytic('backend');
+        //await postServiceAnalytic('withdraw');
+        //await postServiceAnalytic('outlet');
+        //await postServiceAnalytic('wallet');
     } catch (err) {
         console.log('error post analytic =>',err)
     }        
@@ -93,6 +93,7 @@ async function createServiceAnalytic(data) {
       domain: data.domain,
       status: data.status,
       cpuProfiling: data.cpuProfiling,
+      category: "service",
     });
 
     let na = await newServiceAnalytic.save();
@@ -101,6 +102,7 @@ async function createServiceAnalytic(data) {
       id: update.id,
       serviceName: data.serviceName,
       status: data.status,
+      category: "service",
       cpuProfiling: data.cpuProfiling,
     });
     await mongoose.connection.close();

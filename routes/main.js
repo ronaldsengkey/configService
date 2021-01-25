@@ -6,7 +6,7 @@ let apiList = require("../services/apiList"),
 
 async function route(fastify, options) {
     try {
-        await sa.mainServiceAnalytic();
+        // await sa.mainServiceAnalytic();
         const schema = {
             body: {
                 type: 'object',
