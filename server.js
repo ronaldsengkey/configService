@@ -35,6 +35,22 @@ fastify.get('/config/update/:type', async function(req, res){
           if (data) {
               io.emit('getTicketing', data);   
           }
+          let data2 = await socketService.getTicketingIT();
+          if (data2) {
+              io.emit('getTicketingIT', data2);
+          }
+          result = 'success';
+          break;
+
+        case 'transaction':
+          let datat = await socketService.getTransaction();
+          if (datat) {
+              io.emit('getTransaction', datat);   
+          }
+          let datat2 = await socketService.getCustomerTransaction();
+          if (datat2) {
+              io.emit('getCustomerTransaction', datat2); 
+          }
           result = 'success';
           break;
 

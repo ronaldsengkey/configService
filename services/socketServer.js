@@ -29,6 +29,10 @@ function listen(app){
                 if (result) {
                     socket.emit('getTicketing', result);   
                 }
+                let result2 = await socketService.getTicketingIT();
+                if (result) {
+                    socket.emit('getTicketingIT', result2);
+                }
             } catch (error) {
                 console.log('error::', error);
             }
@@ -40,6 +44,10 @@ function listen(app){
                 let result = await socketService.getTransaction();
                 if (result) {
                     socket.emit('getTransaction', result);   
+                }
+                let result2 = await socketService.getCustomerTransaction();
+                if (result2) {
+                    socket.emit('getCustomerTransaction', result2); 
                 }
             } catch (error) {
                 console.log('error::', error);
