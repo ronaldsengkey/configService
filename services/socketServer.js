@@ -129,6 +129,7 @@ async function createService(data) {
             serviceName: update.serviceName,
             status: data.status,
             category: data.category,
+            type: data.type,
             cpuProfiling: data.cpuProfiling,
         })); 
         return true;

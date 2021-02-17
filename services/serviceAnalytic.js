@@ -438,6 +438,7 @@ async function getApiService() {
         server: data.server,
         category: data.category,
         status: data.status,
+        type: data.type,
         performance: await serviceAnalytic.find({
           serviceName: data.serviceName,
           domain: data.domain
