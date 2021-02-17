@@ -83,6 +83,8 @@ module.exports = {
     listen, io
 }
 
+exports.createService = createService;
+
 async function createService(data) {
     console.log('createService::', data);
     try {
@@ -90,30 +92,37 @@ async function createService(data) {
         await mongoose.connect(mongoConf.mongoDb.url, {
             useNewUrlParser: true,
         });
-        // mongoose.set('debug', false);
-        let update = await serviceParent.findOneAndUpdate({
+        let where = {
             serviceName: data.serviceName,
             domain: data.domain,
             hostName: data.hostName,
             port: data.port,
             server: data.server,
-            category: data.category,
-        },{
+            category: data.category
+        }
+        if (data.type) {
+            where.type = data.type
+        }
+        // mongoose.set('debug', false);
+        let update = await serviceParent.findOneAndUpdate(where,{
             status: data.status
         },{
             upsert: true, 
             setDefaultsOnInsert: true,
             new: true
         });
-        let newServiceAnalytic = new serviceAnalytic({
-            serviceName: data.serviceName,
-            // responseCode: data.responseCode,
-            domain: data.domain,
-            status: data.status,
-            cpuProfiling: data.cpuProfiling,
-        });
-      
-        await newServiceAnalytic.save();
+        
+        if (data.category != 'database') {
+            let newServiceAnalytic = new serviceAnalytic({
+                serviceName: data.serviceName,
+                // responseCode: data.responseCode,
+                domain: data.domain,
+                status: data.status,
+                cpuProfiling: data.cpuProfiling,
+            });
+            await newServiceAnalytic.save();    
+        }
+        
         await mongoose.connection.close();
         io.emit('updateService', JSON.stringify({
             id: update._id,

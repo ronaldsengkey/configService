@@ -30,6 +30,11 @@ const apiSchema = new Schema({
         type: String,
         required: true
     },
+    type: {
+        // Example (service, database)
+        type: String,
+        required: false
+    },
     status: {
         // Example (1 = enable, 0 = disabled) default value is 1
         // type: Number,

@@ -65,6 +65,16 @@ fastify.get('/config/update/:type', async function(req, res){
   res.send('update::' + result);
 })
 
+const databases = require('./databaseList.json');
+const CronJob = require('cron').CronJob;
+let job1 = new CronJob('0 */5 * * * *', async function() {
+  console.log('cronjob-1::' + new Date());
+  for(let database of databases){
+    // console.log("database::", database);
+    await socketService.checkDatabase(database);
+  }
+}, null, true, 'Asia/Jakarta'); 
+job1.start();
 // async function actionPost(data) {
 //   try {
 //     axios({

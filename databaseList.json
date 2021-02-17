@@ -1,0 +1,84 @@
+[{
+    "domain": "sandbox.api.ultipay.id",
+    "hostName": "http://3.209.100.225:7080/",
+    "port": "27017",
+    "serviceName": "cdnSource",
+    "category": "database",
+    "server": "us",
+    "type": "mongo",
+    "status": "off"
+}, {
+    "domain": "sandbox.api.ultipay.id",
+    "hostName": "http://3.209.100.225:7080/",
+    "port": "27017",
+    "serviceName": "configServer",
+    "category": "database",
+    "server": "us",
+    "type": "mongo",
+    "status": "off"
+}, {
+    "domain": "sandbox.api.ultipay.id",
+    "hostName": "http://3.209.100.225:7080/",
+    "port": "27017",
+    "serviceName": "dashboard",
+    "category": "database",
+    "server": "us",
+    "type": "mongo",
+    "status": "off"
+}, {
+    "domain": "sandbox.api.ultipay.id",
+    "hostName": "http://3.209.100.225:7080/",
+    "port": "27017",
+    "serviceName": "ewalletv1",
+    "category": "database",
+    "server": "us",
+    "type": "mongo",
+    "status": "off"
+}, {
+    "domain": "sandbox.api.ultipay.id",
+    "hostName": "http://3.209.100.225:7080/",
+    "port": "27017",
+    "serviceName": "log",
+    "category": "database",
+    "server": "us",
+    "type": "mongo",
+    "status": "off"
+}, {
+    "domain": "sandbox.api.ultipay.id",
+    "hostName": "http://3.209.100.225:7080/",
+    "port": "27017",
+    "serviceName": "oauth",
+    "category": "database",
+    "server": "us",
+    "type": "mongo",
+    "status": "off"
+}, {
+    "domain": "sandbox.api.ultipay.id",
+    "hostName": "http://3.209.100.225:7080/",
+    "port": "27017",
+    "serviceName": "outlet",
+    "category": "database",
+    "server": "us",
+    "type": "mongo",
+    "status": "off"
+}, {
+    "domain": "sandbox.api.ultipay.id",
+    "hostName": "http://3.209.100.225:7080/",
+    "port": "27017",
+    "serviceName": "withdraw",
+    "category": "database",
+    "server": "us",
+    "type": "mongo",
+    "status": "off"
+}
+
+, {
+    "domain": "ultipay-sandbox.cexme38tzdpa.us-east-1.rds.amazonaws.com",
+    "hostName": "http://3.209.100.225:7070/?pgsql=172.31.66.132&username=wallet_user&db=ewallet",
+    "port": "5432",
+    "serviceName": "ewallet",
+    "category": "database",
+    "server": "us",
+    "type": "postgre",
+    "status": "off"
+}]
