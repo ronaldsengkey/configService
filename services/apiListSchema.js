@@ -24,7 +24,7 @@ const apiSchema = new Schema({
         required: true
     },
     fieldTypeOrigin: {
-        // Example (apiService, urlServer, keyConfig)
+        // Example (apiService, urlServer, keyConfig , database)
         type: Number,
         required: true
     },

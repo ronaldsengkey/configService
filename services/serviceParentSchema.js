@@ -29,7 +29,7 @@ const apiSchema = new Schema({
         // Example (service, database)
         type: String,
         required: true
-    },    
+    },
     status: {
         // Example (1 = enable, 0 = disabled) default value is 1
         // type: Number,

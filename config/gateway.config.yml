@@ -7,13 +7,13 @@ https:
   # options:
   #   requestCert: false
   #   rejectUnauthorized: false
-# http:
-#   port: 8443
-#   hostname:
-#   # hostname: 192.168.0.59
-admin:
-  port: 8444
-  host: "localhost"
+http:
+  port: 8443
+  hostname: 192.168.0.96
+  # hostname: 192.168.0.59
+# admin:
+#   port: 8444
+#   host: "localhost"
 apiEndpoints:
   # wallet:
   #   host: "sandbox.api.ultipay.id"

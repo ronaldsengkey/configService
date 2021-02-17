@@ -68,10 +68,14 @@ async function route(fastify, options) {
             childServiceSchema
         }, apiList.createChildService);
 
+        await fastify.post('/config/checkDatabase/:param', {}, sa.checkDatabase); // PARAM = postgre / cdnSource / configServer / dashboard / ewalletv1 / log / oauth / outlet / ultiSend / withdraw
+        // await fastify.post('/config/createServiceAnalytic', {
+        //     schemaServiceAnalytic
+        // }, sa.createServiceAnalytic);
         await fastify.post('/config/deleteServiceAnalytic', {}, sa.deleteServiceAnalytic);
     } catch (err) {
         boom.boomify(err);
-        console.log('err =>',err)
+        console.log('err =>', err)
         return response.serverError(err, "Internal server error", reply);
     }
 }

@@ -32,6 +32,7 @@ async function test3(request, reply) {
 async function apiList(request, reply) {
   try {
     // Filter access request
+    let query = '';
     let param = request.params.param;
     await mongoose.connect(mongoConf.mongoDb.url, {
       useNewUrlParser: true,
@@ -46,7 +47,7 @@ async function apiList(request, reply) {
         "category": param
       }
     }
-    let query = await apiSchema.find(f);
+    query = await apiSchema.find(f);
     if (query.length > 0) {
       // Return response
       await mongoose.connection.close();
@@ -58,7 +59,9 @@ async function apiList(request, reply) {
         reply
       );
     }
+    // console.log('FIELD NAME ==> ',cryptr.decrypt('5b67e3f950b8bdf8a0f666dfa7e6af2842ba3f2dcc7573a88dda22960f597b0095191ce8a008b44bbe3e8739291ac601eea0013fff688ae71d6a25159bcfd90ec91613ee747ddab47e9afe37b885d2976b58690c18a4c159ed1b3afd89fb62a2cd9e974aaccd4deff684c504f7a485f4'))
   } catch (err) {
+    console.log('Error ==> ', err)
     boom.boomify(err);
     return response.serverError(err, "Internal server error", reply);
   }
@@ -67,6 +70,7 @@ async function apiList(request, reply) {
 async function createApi(request, reply) {
   try {
     // Get body pot
+    console.log('REQUEST ===> ', request.body)
     let param = request.body,
       fieldName = cryptr.encrypt(param.fieldName),
       fieldValue = cryptr.encrypt(param.fieldValue),
