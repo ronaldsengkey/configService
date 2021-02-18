@@ -100,7 +100,7 @@ module.exports.checkDatabase = async function (data) {
         case "postgre":
             let url_pg = `postgres://${process.env.DATABASE_USERNAME}:${process.env.DATABASE_PASSWORD}@${data.domain}:${data.port}/${data.serviceName}`;
             console.log('URL PG => ', url_pg)
-            pgCon = new pg.Client(url_pg);
+            const pgCon = new pg.Client(url_pg);
             await pgCon.connect().then(function (e) {
                 console.log('PG Connected')
                 data.status = "on";
@@ -108,6 +108,7 @@ module.exports.checkDatabase = async function (data) {
                 console.log('postgre ==> ', err)
                 data.status = 'off'
             })
+            await pgCon.end();
             break;
         case "mongo":
             url_mongo = `mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${data.domain}:${data.port}/${data.serviceName}?authSource=admin`;
@@ -123,6 +124,7 @@ module.exports.checkDatabase = async function (data) {
                     console.log('Error connect mongo ==> ', err)
                     data.status = "off";
                 });
+            await mongoose.connection.close();
             break;
     }
     console.log("checkDatabase::", data);
