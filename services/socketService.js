@@ -113,8 +113,7 @@ module.exports.checkDatabase = async function (data) {
         case "mongo":
             url_mongo = `mongodb://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${data.domain}:${data.port}/${data.serviceName}?authSource=admin`;
             console.log('mongo ==> ', url_mongo)
-            await mongoose
-                .connect(url_mongo, {
+            await mongoose.connect(url_mongo, {
                     useNewUrlParser: true,
                 })
                 .then(function (e) {

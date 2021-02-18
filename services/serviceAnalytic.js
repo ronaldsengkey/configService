@@ -154,6 +154,7 @@ async function updateStatusDatabase(data) {
       new: true,
       sort: sorting
     });
+    await mongoose.connection.close();
   } catch (e) {
     console.log('Error update status database ==> ', e);
     res.responseCode = process.env.ERRORINTERNAL_RESPONSE;
@@ -407,6 +408,7 @@ async function deleteServiceAnalytic() {
     });
 
     let query = await serviceAnalytic.deleteMany({});
+    await mongoose.connection.close();
     if (query === null) {
       return process.env.NOTFOUND_RESPONSE;
     } else {
